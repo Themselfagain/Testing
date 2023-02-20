@@ -53,5 +53,20 @@ namespace BankingSystem
                 this.Balance = Balance + Balance * (decimal)percent;
             }
         }
+        public void Bonus()
+        {
+            if (this.Balance > 1000&&this.Balance<2000)
+            {
+                this.Balance += 100;
+            }
+            else if (this.Balance >= 2000&&this.Balance<=3000)
+            {
+                this.Balance += 200;
+            }
+            else if(this.Balance>3000)
+            {
+                this.Balance += 300;
+            }
+        }
     }
 }
