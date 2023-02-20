@@ -32,6 +32,22 @@ namespace BankingSystem.Tests
             Assert.AreEqual(balance, bankAccount.Balance);
         }
         [Test]
+        public void BalanceShouldThrowMessage()
+        {
+            int id = 123;
+            decimal amount = -100;
+            string exp = "Balance must be positive or zero";
+            var act = Assert.Throws<ArgumentException>(() => new BankAccount(id, amount));
+            Assert.AreEqual(exp, act.Message);
+        }
+        [Test]
+        public void BalanceShouldThrow()
+        {
+            int id = 123;
+            decimal amount = -100;
+            Assert.Throws<ArgumentException>(() => new BankAccount(id, amount));
+        }
+        [Test]
         public void DepositShouldThrowMessage()
         {
             decimal deposit = -1;
@@ -41,21 +57,30 @@ namespace BankingSystem.Tests
                 () => bankAccount.Deposit(deposit));
             Assert.AreEqual(exp, act.Message);
         }
+        [TestCase(123,500)]
+        [TestCase(123, 500.523)]
+        [TestCase(123, 0)]
+
+        public void ConstructorShouldSetBalanceAndId(int id, decimal amount)
+        {
+            BankAccount bankAccount = new BankAccount(id, amount);
+            Assert.AreEqual(amount,bankAccount.Balance);
+        }
         [Test]
         public void DepositShouldIncreaseBalance()
         {
-            BankAccount bankAccount = new BankAccount(123);
+            int id = 123;
+            decimal amount = 500;
+            BankAccount bankAccount = new BankAccount(id,amount);
             decimal depositAmount = 100;
             bankAccount.Deposit(depositAmount);
-            Assert.AreEqual(depositAmount, bankAccount.Balance);
+            Assert.AreEqual(depositAmount+amount, bankAccount.Balance);
         }
         [Test]
         public void AccountInicializeWithPositiveValues()
         {
             BankAccount bankAccount = new BankAccount(123, 2000m);
             Assert.AreEqual(2000m, bankAccount.Balance);
-
-
         }
 
 
